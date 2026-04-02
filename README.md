@@ -50,88 +50,20 @@ A arquitetura foi desenhada para separar claramente:
 
 ---
 
-## Diagrama
-
-```mermaid
-flowchart TB
-
-    A["Usuários / Filiais / Farmácias"] --> B["Route 53 / DNS"]
-
-    subgraph VPC["AWS VPC"]
-        subgraph PUB["Public Subnet"]
-            C["Application Load Balancer"]
-        end
-
-        subgraph PRIVAPP["Private Subnet - Aplicação"]
-            D1["EC2 - App Server 1"]
-            D2["EC2 - App Server 2"]
-        end
-
-        subgraph PRIVDB["Private Subnet - Banco"]
-            E["RDS / Aurora"]
-        end
-    end
-
-    B --> C
-    C --> D1
-    C --> D2
-    D1 --> E
-    D2 --> E
-
-    subgraph DATALAKE["Camada de Dados"]
-        F["Amazon S3 (bronze / silver / gold)"]
-    end
-
-    subgraph ETL["ETL"]
-        G["AWS Glue"]
-    end
-
-    subgraph ANALYTICS["Analytics"]
-        H["Amazon Athena"]
-        I["BI / Dashboards / ML"]
-    end
-
-    E --> G
-    G --> F
-    F --> H
-    H --> I
-
-    subgraph GOV["Governança e Segurança"]
-        J["IAM"]
-        K["Security Groups"]
-        L["CloudWatch"]
-        M["CloudTrail"]
-        N["Lake Formation"]
-    end
-
-    J -.-> D1
-    J -.-> D2
-    J -.-> F
-    K -.-> C
-    K -.-> D1
-    K -.-> D2
-    K -.-> E
-    L -.-> C
-    L -.-> D1
-    L -.-> D2
-    L -.-> E
-    M -.-> C
-    M -.-> E
-    N -.-> F
-    ```
-
 ## Estrutura do repositório
 
 aws-data-platform-abstergo/
-├── README.md
-├── diagrams/
-│   └── architecture.md
-├── data-model/
-│   └── facts_dims.md
-├── etl/
-│   └── glue_pipeline.md
-└── docs/
-    └── arquitetura_completa.md
+ ├── README.md
+ ├── diagrams/
+ │   └── architecture.md
+ ├── data-model/
+ │   └── facts_dims.md
+ ├── etl/
+ │   └── glue_pipeline.md
+ └── docs/
+     └── arquitetura_completa.md
+
+---
 
 ## Link para documentação completa
 
