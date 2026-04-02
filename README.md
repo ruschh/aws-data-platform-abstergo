@@ -2,85 +2,93 @@
 
 ## Problema de Negócio
 
-Distribuição farmacêutica exige:
-
-- controle de estoque
-
-- otimização logística
-
-- análise de custos
+A distribuição farmacêutica exige controle rigoroso de estoque, otimização logística e análise contínua de custos operacionais. Em um cenário com múltiplas filiais, farmácias e fornecedores, a empresa precisa de uma arquitetura que combine alta disponibilidade, segurança, governança e capacidade analítica.
 
 ## Solução
 
-Arquitetura AWS baseada em:
+Este projeto propõe uma arquitetura de data platform em AWS para uma empresa farmacêutica, combinando:
 
-- Data Lake (S3)
+- Data Lake em Amazon S3
+- ETL com AWS Glue
+- Analytics serverless com Amazon Athena
+- Camada operacional com EC2, RDS e Load Balancer
+- Infraestrutura segura com VPC, subnets privadas, IAM e controles de rede
 
-- ETL (Glue)
+## Resultados Esperados
 
-- Analytics (Athena)
-
-## Resultados esperados
-
-- redução de custo logístico
-
-- melhoria no SLA
-
-- governança de dados
+- redução de custo logístico  
+- melhoria no SLA de entrega  
+- maior governança de dados  
+- separação entre sistemas transacionais e analíticos  
+- base escalável para analytics e machine learning  
 
 ## Descrição
 
-Arquitetura de data platform em AWS para empresa farmacêutica, incluindo:
+A arquitetura foi desenhada para separar claramente:
 
-	- Data Lake (S3)
+- **Camada operacional (OLTP)**: Route 53, ALB, EC2 e RDS/Aurora  
+- **Camada de dados**: Amazon S3 com bronze, silver e gold  
+- **Processamento**: AWS Glue para ETL e catálogo  
+- **Consumo analítico**: Athena, dashboards e modelos  
+- **Governança e segurança**: VPC, IAM, Security Groups, CloudWatch, CloudTrail e Lake Formation  
 
-	- ETL (Glue)
+## Tecnologias
 
-	- Analytics (Athena)
-
-	- Infraestrutura segura (VPC, subnets privadas, IAM)
+- AWS Route 53  
+- AWS Application Load Balancer (ALB)  
+- Amazon EC2  
+- Amazon RDS / Aurora  
+- Amazon S3  
+- AWS Glue  
+- Amazon Athena  
+- AWS VPC  
+- IAM  
+- Security Groups  
+- CloudWatch  
+- CloudTrail  
+- Lake Formation  
 
 ---
- 
+
 ## Diagrama
 
 ```mermaid
 flowchart TB
 
-    A[Usuários / Filiais / Farmácias] --> B[Route 53 / DNS]
-    B --> C[Application Load Balancer (ALB / ELB)]
+    A["Usuários / Filiais / Farmácias"] --> B["Route 53 / DNS"]
 
     subgraph VPC["AWS VPC"]
         subgraph PUB["Public Subnet"]
-            C
+            C["Application Load Balancer"]
         end
 
         subgraph PRIVAPP["Private Subnet - Aplicação"]
-            D1[EC2 - App Server 1<br/>ERP / API / Portal / Order Processing]
-            D2[EC2 - App Server 2<br/>ERP / API / Portal / Order Processing]
+            D1["EC2 - App Server 1"]
+            D2["EC2 - App Server 2"]
         end
 
         subgraph PRIVDB["Private Subnet - Banco"]
-            E[RDS / Aurora<br/>Dados Transacionais]
+            E["RDS / Aurora"]
         end
     end
 
+    B --> C
     C --> D1
     C --> D2
     D1 --> E
     D2 --> E
 
     subgraph DATALAKE["Camada de Dados"]
-        F[Amazon S3<br/>bronze / silver / gold<br/>logs / backups]
+        F["Amazon S3 (bronze / silver / gold)"]
     end
 
-    subgraph ETL["ETL e Consultas Analíticas"]
-        G[AWS Glue<br/>catálogo + ETL]
-        H[Amazon Athena<br/>SQL sobre dados no S3]
+    subgraph ETL["ETL"]
+        G["AWS Glue"]
     end
 
-    subgraph ANALYTICS["Consumo Analítico"]
-        I[BI / Dashboards / DS / ML<br/>Streamlit / notebooks / modelos preditivos]
+    subgraph ANALYTICS["Analytics"]
+        H["Amazon Athena"]
+        I["BI / Dashboards / ML"]
     end
 
     E --> G
@@ -88,12 +96,12 @@ flowchart TB
     F --> H
     H --> I
 
-    subgraph GOV["Governança / Operação / Segurança"]
-        J[IAM<br/>acessos]
-        K[Security Groups<br/>firewall / rede]
-        L[CloudWatch<br/>métricas / logs]
-        M[CloudTrail<br/>auditoria]
-        N[Lake Formation<br/>governança S3]
+    subgraph GOV["Governança e Segurança"]
+        J["IAM"]
+        K["Security Groups"]
+        L["CloudWatch"]
+        M["CloudTrail"]
+        N["Lake Formation"]
     end
 
     J -.-> D1
@@ -110,7 +118,19 @@ flowchart TB
     M -.-> C
     M -.-> E
     N -.-> F
-```
+
+## Estrutura do repositório
+
+aws-data-platform-abstergo/
+├── README.md
+├── diagrams/
+│   └── architecture.md
+├── data-model/
+│   └── facts_dims.md
+├── etl/
+│   └── glue_pipeline.md
+└── docs/
+    └── arquitetura_completa.md
 
 ## Link para documentação completa
 
