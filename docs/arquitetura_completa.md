@@ -127,7 +127,7 @@ Além disso, o S3 armazena logs do ALB, logs de aplicação e backups, sendo ace
 ## Fluxo de dados
 
 
-```mermaid
+```text
                 Usuários / Farmácias  
                         ↓   
                      Route 53  
@@ -145,6 +145,7 @@ Além disso, o S3 armazena logs do ALB, logs de aplicação e backups, sendo ace
              Athena (consultas SQL)  
                         ↓  
          Dashboards / BI / Machine Learning  
+```
 
 ---
 
