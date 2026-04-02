@@ -118,6 +118,7 @@ flowchart TB
     M -.-> C
     M -.-> E
     N -.-> F
+    ```
 
 ## Estrutura do repositório
 
