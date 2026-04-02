@@ -52,6 +52,7 @@ A arquitetura foi desenhada para separar claramente:
 
 ## Estrutura do repositório
 
+```text 
 aws-data-platform-abstergo/
 ├── README.md
 ├── diagrams/
@@ -62,6 +63,7 @@ aws-data-platform-abstergo/
 │   └── glue_pipeline.md
 └── docs/
     └── arquitetura_completa.md
+```
 
 ## Link para documentação completa
 
