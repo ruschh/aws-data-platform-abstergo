@@ -145,7 +145,7 @@ Além disso, o S3 armazena logs do ALB, logs de aplicação e backups, sendo ace
              Athena (consultas SQL)  
                         ↓  
          Dashboards / BI / Machine Learning  
-```
+
 ---
 
 ## Conclusões

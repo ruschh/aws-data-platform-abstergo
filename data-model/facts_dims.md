@@ -82,6 +82,7 @@ fact_logistics:
 - nível: entrega
 
 ---
+
 ## Tabelas Dimensão
 
 ### dim_product
