@@ -1,5 +1,3 @@
-```md 
-
 # AWS Data Platform – Abstergo Industries
 
 ## Problema de Negócio
@@ -112,7 +110,7 @@ flowchart TB
     M -.-> C
     M -.-> E
     N -.-> F
-```md
+```
 
 ## Link para documentação completa
 
